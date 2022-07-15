@@ -1,0 +1,19 @@
+.app-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.side-nav-container {
+    display: flex;
+    height: 100%;
+}
+
+.side-nav {
+    min-width: 300px;
+}
+
+.side-nav-slideout-container {
+    display: flex;
+    flex-direction: column;
+}
