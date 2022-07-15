@@ -9,15 +9,18 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { IngredientsComponent } from './ingredients/ingredients.component';
+import { MatCardModule } from '@angular/material/card';
 import { PumpsComponent } from './pumps/pumps.component';
 import { DrinksComponent } from './drinks/drinks.component';
+import { DrinkComponent } from './drinks/drink/drink.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     IngredientsComponent,
     PumpsComponent,
-    DrinksComponent
+    DrinksComponent,
+    DrinkComponent
   ],
   imports: [
     BrowserModule,
@@ -26,6 +29,7 @@ import { DrinksComponent } from './drinks/drinks.component';
     MatIconModule,
     MatButtonModule,
     MatSidenavModule,
+    MatCardModule,
     BrowserAnimationsModule
   ],
   providers: [],

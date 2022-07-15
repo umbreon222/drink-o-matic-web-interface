@@ -16,4 +16,11 @@
 .side-nav-slideout-container {
     display: flex;
     flex-direction: column;
+    background-color: grey;
+}
+
+.side-nav-content {
+    display: flex;
+    height: 100%;
+    width:100%;
 }
