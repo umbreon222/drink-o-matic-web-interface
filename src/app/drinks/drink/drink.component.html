@@ -1,3 +1,14 @@
-<mat-card class="drink-container">
-    <p>drink works!</p>
+<mat-card class="drink-container" (click)="openDrinkConfig()">
+    <button mat-mini-fab class="delete-button" (click)="deleteDrinkClicked()">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <img class="drink-preview" alt="Drink preview image"/> 
+    <span>Name:</span>
+    <span>Drink</span>
+    <span>Description:</span>
+    <p class="description">It's good</p>
+    <div class="drink-footer-container">
+        <span># Ingredients</span>
+        <span># Stars</span>
+    </div>
 </mat-card>

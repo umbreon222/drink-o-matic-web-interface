@@ -12,4 +12,11 @@ export class DrinkComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openDrinkConfig() {
+    console.log('openDrinkConfig()');
+  }
+
+  deleteDrinkClicked() {
+    console.log('deleteDrinkClicked()');
+  }
 }
