@@ -16,6 +16,8 @@ import { PumpsComponent } from './pumps/pumps.component';
 import { DrinksComponent } from './drinks/drinks.component';
 import { DrinkComponent } from './drinks/drink/drink.component';
 import { DrinkConfigDialogComponent } from './drinks/drink-config-dialog/drink-config-dialog.component';
+import { IngredientComponent } from './ingredients/ingredient/ingredient.component';
+import { IngredientConfigDialogComponent } from './ingredients/ingredient-config-dialog/ingredient-config-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { DrinkConfigDialogComponent } from './drinks/drink-config-dialog/drink-c
     PumpsComponent,
     DrinksComponent,
     DrinkComponent,
-    DrinkConfigDialogComponent
+    DrinkConfigDialogComponent,
+    IngredientComponent,
+    IngredientConfigDialogComponent
   ],
   imports: [
     BrowserModule,
