@@ -8,11 +8,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { IngredientsComponent } from './ingredients/ingredients.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatInputModule } from '@angular/material/input'; 
 import { MatCardModule } from '@angular/material/card';
+import { IngredientsComponent } from './ingredients/ingredients.component';
 import { PumpsComponent } from './pumps/pumps.component';
 import { DrinksComponent } from './drinks/drinks.component';
 import { DrinkComponent } from './drinks/drink/drink.component';
+import { DrinkConfigDialogComponent } from './drinks/drink-config-dialog/drink-config-dialog.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,8 @@ import { DrinkComponent } from './drinks/drink/drink.component';
     IngredientsComponent,
     PumpsComponent,
     DrinksComponent,
-    DrinkComponent
+    DrinkComponent,
+    DrinkConfigDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -30,6 +34,8 @@ import { DrinkComponent } from './drinks/drink/drink.component';
     MatButtonModule,
     MatSidenavModule,
     MatCardModule,
+    MatDialogModule,
+    MatInputModule,
     BrowserAnimationsModule
   ],
   providers: [],

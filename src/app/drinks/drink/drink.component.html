@@ -1,14 +1,14 @@
-<mat-card class="drink-container" (click)="openDrinkConfig()">
+<mat-card class="drink-container">
     <button mat-mini-fab class="delete-button" (click)="deleteDrinkClicked()">
         <mat-icon>delete</mat-icon>
     </button>
-    <img class="drink-preview" alt="Drink preview image"/> 
-    <span>Name:</span>
-    <span>Drink</span>
-    <span>Description:</span>
-    <p class="description">It's good</p>
-    <div class="drink-footer-container">
-        <span># Ingredients</span>
-        <span># Stars</span>
+    <div class="drink-info-container" (click)="openDrinkConfig()">
+        <img class="drink-preview" alt="Drink preview image"/>
+        <span>{{drink.name}}</span>
+        <p class="description">{{drink.description}}</p>
+        <div class="drink-footer-container">
+            <span>{{drink.ingredients.length}} ingredient{{drink.ingredients.length > 1 ? 's' : ''}}</span>
+            <span>{{drink.starRating}} star{{drink.starRating > 1 ? 's' : ''}}</span>
+        </div>
     </div>
 </mat-card>
