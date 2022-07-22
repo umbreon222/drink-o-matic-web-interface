@@ -1,5 +1,5 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -14,7 +14,7 @@ import { Ingredient } from 'src/models/ingredient';
   templateUrl: './drink-config-dialog.component.html',
   styleUrls: ['./drink-config-dialog.component.scss']
 })
-export class DrinkConfigDialogComponent implements OnInit {
+export class DrinkConfigDialogComponent {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   ingredients: Ingredient[] = [];
   ingredientsCtrl = new FormControl('');
@@ -35,9 +35,6 @@ export class DrinkConfigDialogComponent implements OnInit {
       map((ingredientName: string | null) => (ingredientName ? this._filter(ingredientName) : this.allIngredients.slice())),
     );
   }
-
-  ngOnInit() {
-  }
   
   closeDialog() {
     this.dialogRef.close(this.drink);
@@ -47,7 +44,7 @@ export class DrinkConfigDialogComponent implements OnInit {
     this.drink.ingredientIds.splice(this.drink.ingredientIds.indexOf(ingredientId), 1);
     const index = this.ingredients.findIndex(ingredient => ingredient.id === ingredientId);
 
-    if (index >= 0) {
+    if (index > -1) {
       this.ingredients.splice(index, 1);
     }
   }

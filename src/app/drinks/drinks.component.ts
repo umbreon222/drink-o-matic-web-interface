@@ -17,10 +17,13 @@ export class DrinksComponent implements OnInit {
   }
 
   deleteDrink(eventInput: any) {
-    let drink = eventInput as Drink;
-    if (!drink) {
+    let drinkToDelete = eventInput as Drink;
+    if (!drinkToDelete) {
       return;
     }
-    console.log(`delete drink id=${drink.id}`);
+    let drinkIndex = this.drinks.findIndex(drink => drink.id === drinkToDelete.id);
+    if (drinkIndex > -1) {
+      this.drinks.splice(drinkIndex, 1);
+    }
   }
 }
