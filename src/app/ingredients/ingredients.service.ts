@@ -20,7 +20,8 @@ export class IngredientsService {
     ];
   }
 
-  storeIngredients(): void {
+  storeIngredients(ingredients: Ingredient[]): void {
+    this.ingredients = ingredients;
     console.log("storeIngredients()");
   }
 

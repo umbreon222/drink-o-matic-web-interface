@@ -26,7 +26,8 @@ export class DrinksService {
     ]
   }
 
-  storeDrinks(): void {
+  storeDrinks(drinks: Drink[]): void {
+    this.drinks = drinks;
     console.log('storeDrinks()');
   }
 
