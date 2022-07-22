@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Pump } from 'src/models/pump';
+import { Settings, SETTINGS } from 'src/models/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -7,22 +8,8 @@ import { Pump } from 'src/models/pump';
 export class PumpsService {
   private pumps: Pump[] = [];
 
-  constructor() {
-    this.loadPumps();
-  }
-
-  loadPumps(): void {
-    this.pumps = [
-      {
-        pumpNumber: 1,
-        ingredientId: 'ingredient1'
-      },
-    ];
-  }
-
-  storePumps(pumps: Pump[]): void {
-    this.pumps = pumps;
-    console.log('storePumps()');
+  constructor(@Inject(SETTINGS) settings: Settings) {
+    this.pumps = settings.pumps;
   }
 
   getPumps(): Pump[] {

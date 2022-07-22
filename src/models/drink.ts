@@ -1,4 +1,4 @@
-export class Drink {
+export interface Drink {
     id: string;
     imageUrl: string;
     name: string;

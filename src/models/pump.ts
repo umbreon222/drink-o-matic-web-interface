@@ -1,4 +1,4 @@
-export class Pump {
+export interface Pump {
     pumpNumber: number;
     ingredientId: string;
 }

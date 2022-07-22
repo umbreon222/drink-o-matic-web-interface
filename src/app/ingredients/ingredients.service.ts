@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Ingredient } from 'src/models/ingredient';
+import { Settings, SETTINGS } from 'src/models/settings';
 
 @Injectable({
   providedIn: 'root'
@@ -7,22 +8,8 @@ import { Ingredient } from 'src/models/ingredient';
 export class IngredientsService {
   private ingredients: Ingredient[] = [];
 
-  constructor() {
-    this.loadIngredients();
-  }
-
-  loadIngredients(): void {
-    this.ingredients = [
-      {
-        id: "FAKE_INGREDIENT_ID",
-        name: "Vodka",
-      },
-    ];
-  }
-
-  storeIngredients(ingredients: Ingredient[]): void {
-    this.ingredients = ingredients;
-    console.log("storeIngredients()");
+  constructor(@Inject(SETTINGS) settings: Settings) {
+    this.ingredients = settings.ingredients;
   }
 
   getIngredient(ingredientId: string): Ingredient | undefined {
