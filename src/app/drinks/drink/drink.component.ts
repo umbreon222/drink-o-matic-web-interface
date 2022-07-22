@@ -2,7 +2,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
-import { IngredientsService } from 'src/app/ingredients/ingredients.service';
 
 @Component({
   selector: 'app-drink',
@@ -16,7 +15,7 @@ export class DrinkComponent {
   @Output()
   public onDeleteDrink: EventEmitter<Drink> = new EventEmitter<Drink>();
 
-  constructor(public dialog: MatDialog, private ingredientsService: IngredientsService) { }
+  constructor(public dialog: MatDialog) { }
 
   openDrinkConfig() {
     let dialogHandle = this.dialog.open(DrinkConfigDialogComponent, {

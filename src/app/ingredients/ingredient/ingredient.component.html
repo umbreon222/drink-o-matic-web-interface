@@ -1,1 +1,11 @@
-<p>ingredient works!</p>
+<mat-card class="ingredient-container">
+    <button mat-mini-fab class="delete-button" (click)="deleteIngredientClicked()">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <div class="ingredient-info-container">
+        <h2>{{ingredient.name}}</h2>
+        <div class="buttons-container">
+            <button mat-flat-button color="primary" (click)="openIngredientConfig()">Configure</button>
+        </div>
+    </div>
+</mat-card>

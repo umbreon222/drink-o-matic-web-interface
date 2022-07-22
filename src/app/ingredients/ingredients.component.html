@@ -1,1 +1,3 @@
-<p>ingredients works!</p>
+<div class="ingredients-container">
+    <app-ingredient *ngFor="let ingredient of ingredients" [ingredient]="ingredient" (onDeleteIngredient)="deleteIngredient($event)"></app-ingredient>
+</div>
