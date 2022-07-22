@@ -1,11 +1,3 @@
 <div class="drinks-container">
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
-    <app-drink></app-drink>
+    <app-drink *ngFor="let drink of drinks" [drink]="drink" (onDeleteDrink)="deleteDrink($event)"></app-drink>
 </div>

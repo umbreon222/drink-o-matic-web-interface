@@ -11,10 +11,32 @@
         <mat-label>Description</mat-label>
         <textarea matInput placeholder="Ex. What's the overall taste? How strong is it?..." [value]="drink.description"></textarea>
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="example-chip-list" appearance="fill">
         <mat-label>Ingredients</mat-label>
-        <input matInput placeholder="Ingredient Chips or Something">
-    </mat-form-field>
+        <mat-chip-list #chipList aria-label="Ingredient selection">
+          <mat-chip
+            *ngFor="let ingredient of ingredients"
+            (removed)="remove(ingredient.id)">
+            {{ingredient.name}}
+            <button matChipRemove>
+              <mat-icon>cancel</mat-icon>
+            </button>
+          </mat-chip>
+          <input
+            matInput
+            placeholder="Search ingredient..."
+            #ingredientsInput
+            [formControl]="ingredientsCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
+        </mat-chip-list>
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+          <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient.id">
+            {{ingredient.name}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
     <mat-form-field>
         <mat-label>Star Rating</mat-label>
         <input matInput type="number" placeholder="Star Rating" [value]="drink.starRating">

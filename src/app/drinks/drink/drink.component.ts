@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
-import { Ingredient } from 'src/models/ingredient';
+import { IngredientsService } from 'src/app/ingredients/ingredients.service';
 
 @Component({
   selector: 'app-drink',
@@ -10,26 +10,23 @@ import { Ingredient } from 'src/models/ingredient';
   styleUrls: ['./drink.component.scss']
 })
 export class DrinkComponent implements OnInit {
+  @Input()
   public drink: Drink;
+
+  @Output()
+  public onDeleteDrink: EventEmitter<Drink> = new EventEmitter<Drink>();
+
   public ingredientNames: string[];
 
-  constructor(public dialog: MatDialog) {
-    this.drink = {
-      imageUrl: 'https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png',
-      name: 'Drink Name',
-      description: 'Drink Description',
-      ingredients: [ { name: 'Ingredient 1' } ],
-      starRating: 5,
-    }
-    this.onDrinkChanged();
-  }
+  constructor(public dialog: MatDialog, private ingredientsService: IngredientsService) { }
 
   ngOnInit(): void {
+    this.onDrinkChanged();
   }
 
   openDrinkConfig() {
     let dialogHandle = this.dialog.open(DrinkConfigDialogComponent, {
-      width: '250px',
+      width: '500px',
       data: this.drink,
     });
 
@@ -42,10 +39,17 @@ export class DrinkComponent implements OnInit {
   }
 
   onDrinkChanged() {
-    this.ingredientNames = this.drink.ingredients.map(ingredient => ingredient.name);
+    let tempIngredientNames: string[] = [];
+    this.drink.ingredientIds.forEach(ingredientId => {
+      let ingredient = this.ingredientsService.getIngredient(ingredientId);
+      if (ingredient) {
+        tempIngredientNames.push(ingredient.name);
+      }
+    });
+    this.ingredientNames = tempIngredientNames;
   }
 
   deleteDrinkClicked() {
-    console.log('deleteDrinkClicked()');
+    this.onDeleteDrink.emit(this.drink);
   }
 }

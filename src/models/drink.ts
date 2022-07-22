@@ -1,9 +1,8 @@
-import { Ingredient } from './ingredient';
-
 export class Drink {
+    id: string;
     imageUrl: string;
     name: string;
     description: string;
-    ingredients: Ingredient[];
+    ingredientIds: string[];
     starRating: number;
 }
