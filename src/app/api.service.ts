@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Settings } from 'src/models/settings';
 
-const BASE_URL = 'http://127.0.0.1:8000/';
+const BASE_URL = 'http://127.0.0.1:7362/';
 const SETTINGS_ENDPOINT = 'settings/';
 const PUMPS_ENDPOINT = 'pumps/';
 
