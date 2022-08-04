@@ -24,7 +24,7 @@ export class ApiService {
   }
 
   public postPump(pumpNumber: number, duration: number): Observable<any> {
-    const url = BASE_URL + `pump/${pumpNumber}`;
+    const url = BASE_URL + PUMPS_ENDPOINT + pumpNumber.toString();
     return this.postText(url, duration.toString());
   }
 
@@ -37,9 +37,9 @@ export class ApiService {
 
   private postText(url: string, payload: string) {
     const httpOptions = {
-      headers: new HttpHeaders({ "Content-Type": "application/text" })
+      headers: new HttpHeaders({ "Content-Type": "text/plain" })
     };
-    return this.http.put(url, payload, httpOptions);
+    return this.http.post(url, payload, httpOptions);
   }
 
   private putJson(url: string, payload: string) {

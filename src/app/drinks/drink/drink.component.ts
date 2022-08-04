@@ -4,9 +4,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
 import { ApiService } from 'src/app/api.service';
-import { ConfirmDefaultCupDialogComponent } from '../confirm-default-cup-dialog/confirm-default-cup-dialog.component';
-import { CupPickerDialogComponent } from '../cup-picker-dialog/cup-picker-dialog.component';
-import { Cup } from 'src/models/cup';
 
 @Component({
   selector: 'app-drink',
@@ -16,6 +13,9 @@ import { Cup } from 'src/models/cup';
 export class DrinkComponent {
   @Input()
   public drink: Drink;
+
+  @Output()
+  public onSubmitDrinkForProcessing = new EventEmitter<Drink>();
 
   @Output()
   public onUpdateDrink = new EventEmitter<Drink>();
@@ -44,43 +44,6 @@ export class DrinkComponent {
   }
 
   requestSubmitDrinkForProcessing() {
-    if (this.drink.defaultCupId) {
-      let dialogHandle = this.dialog.open(ConfirmDefaultCupDialogComponent, {
-        width: '500px',
-        data: this.drink.defaultCupId
-      });
-
-      dialogHandle.afterClosed().pipe(first()).subscribe((result: Cup) => {
-        if (result) {
-          this.submitDrinkForProcessing(result);
-          return;
-        }
-        
-        this.launchCupPickerDialog();
-      });
-
-      return;
-    }
-
-    this.launchCupPickerDialog();
-  }
-
-  launchCupPickerDialog() {
-    let dialogHandle = this.dialog.open(CupPickerDialogComponent, {
-      width: '500px'
-    });
-
-    dialogHandle.afterClosed().pipe(first()).subscribe((selectedCup: Cup) => {
-      if (selectedCup) {
-        this.submitDrinkForProcessing(selectedCup);
-      }
-    });
-  }
-
-  submitDrinkForProcessing(selectedCup: Cup): void {
-    console.log(`Submitting drink for processing: ${this.drink.name} using cup ${selectedCup.name}`);
-    this.drink.ingredientMeasurements.forEach(ingredientMeasurement => {
-      // this.apiService.postPump().subscribe(() => {});
-    });
+    this.onSubmitDrinkForProcessing.emit(this.drink);
   }
 }
