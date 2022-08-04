@@ -1,45 +1,50 @@
-<form [formGroup]="drinkForm" class="drink-config-form" (ngSubmit)="onSubmit()">
-    <mat-form-field>
-        <mat-label>Image Url</mat-label>
-        <input matInput placeholder="Image Url" formControlName="imageUrl">
+<h1 mat-dialog-title>Drink Configuration</h1>
+<mat-dialog-content>
+  <form [formGroup]="drinkForm" class="drink-config-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Image Url</mat-label>
+      <input matInput placeholder="Image Url" formControlName="imageUrl" />
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Drink Name</mat-label>
-        <input matInput placeholder="Drink Name" formControlName="name">
+    <mat-form-field appearance="fill">
+      <mat-label>Drink Name</mat-label>
+      <input matInput placeholder="Drink Name" formControlName="name" />
     </mat-form-field>
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Ex. What's the overall taste? How strong is it?..." formControlName="description"></textarea>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Ex. What's the overall taste? How strong is it?..." formControlName="description"></textarea>
     </mat-form-field>
-    <mat-form-field class="example-chip-list" appearance="fill">
-        <mat-label>Ingredients</mat-label>
-        <mat-chip-list #chipList aria-label="Ingredient selection">
-          <mat-chip
-            *ngFor="let ingredient of ingredients"
-            (removed)="remove(ingredient.id)">
-            {{ingredient.name}}
-            <button matChipRemove>
-              <mat-icon>cancel</mat-icon>
-            </button>
-          </mat-chip>
-          <input
-            matInput
-            placeholder="Search ingredient..."
-            #ingredientsInput
-            formControlName="ingredientNameCriteria"
-            [matAutocomplete]="auto"
-            [matChipInputFor]="chipList"
-            [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
-        </mat-chip-list>
-        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-          <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient.id">
-            {{ingredient.name}}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-    <mat-form-field>
-        <mat-label>Star Rating</mat-label>
-        <input matInput type="number" placeholder="Star Rating" formControlName="starRating">
+    <mat-form-field appearance="fill">
+      <mat-label>Ingredients</mat-label>
+      <mat-chip-list #chipList aria-label="Ingredient selection">
+        <mat-chip *ngFor="let ingredient of ingredients" (removed)="remove(ingredient.id)">
+          {{ingredient.name}}
+          <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input matInput #ingredientsNameCriteriaInput type="text" placeholder="Search ingredient..." formControlName="ingredientNameCriteria" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"/>
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient.id">
+          {{ingredient.name}}
+        </mat-option>
+      </mat-autocomplete>
     </mat-form-field>
-    <button type="submit" mat-flat-button color="accent" class="save-button">Save</button>
-</form>
+    <mat-form-field appearance="fill">
+      <mat-label>Default Cup</mat-label>
+      <mat-select formControlName="defaultCupId">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let cup of allCups" [value]="cup.id">
+          {{cup.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Star Rating</mat-label>
+      <input matInput type="number" placeholder="Star Rating" formControlName="starRating" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="submit" mat-flat-button color="accent" (click)="onSubmit()">Save</button>
+</mat-dialog-actions>

@@ -1,11 +1,12 @@
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { SettingsService } from 'src/app/settings.service';
+import { Cup } from 'src/models/cup';
 import { Drink } from 'src/models/drink';
 import { Ingredient } from 'src/models/ingredient';
 import { IngredientMeasurement } from 'src/models/ingredient-measurement';
@@ -16,18 +17,22 @@ import { IngredientMeasurement } from 'src/models/ingredient-measurement';
   styleUrls: ['./drink-config-dialog.component.scss']
 })
 export class DrinkConfigDialogComponent implements OnInit {
-  drinkForm: FormGroup;
-  separatorKeysCodes: number[] = [ENTER, COMMA];
-  ingredients: Ingredient[] = [];
-  filteredIngredients: Observable<Ingredient[]>;
-  allIngredients: Ingredient[] = [];
-  ingredientNameCriteriaControl = new FormControl('');
 
-  @ViewChild('ingredientsInput') ingredientsInput: ElementRef<HTMLInputElement>;
+  @ViewChild('ingredientsNameCriteriaInput')
+  ingredientsNameCriteriaInput: ElementRef<HTMLInputElement>;
+
+  drinkForm: FormGroup;
+  separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  allIngredients: Ingredient[];
+  ingredientNameCriteriaControl = new FormControl('');
+  filteredIngredients: Observable<Ingredient[]>;
+  ingredients: Ingredient[];
+  allCups: Cup[];
 
   constructor(
     private dialogRef: MatDialogRef<DrinkConfigDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private drink: Drink,
+    private formBuilder: FormBuilder,
     private settingsService: SettingsService
   ) { }
   
@@ -35,14 +40,15 @@ export class DrinkConfigDialogComponent implements OnInit {
     this.settingsService.settings$.subscribe(settings => {
       this.allIngredients = settings.ingredients;
       this.ingredients = this.allIngredients.filter(ingredient => this.drink.ingredientMeasurements.some(ingredientMeasurement => ingredientMeasurement.ingredientId === ingredient.id));
-      this.drinkForm = new FormGroup({
-        imageUrl: new FormControl(this.drink.imageUrl),
-        name: new FormControl(this.drink.name),
-        description: new FormControl(this.drink.description),
-        starRating: new FormControl(this.drink.starRating),
+      this.allCups = settings.cups;
+      this.drinkForm = this.formBuilder.group({
+        imageUrl: this.drink.imageUrl,
+        name: this.drink.name,
+        description: this.drink.description,
+        defaultCupId: this.drink.defaultCupId,
+        starRating: this.drink.starRating,
         ingredientNameCriteria: this.ingredientNameCriteriaControl
       });
-
       
       this.filteredIngredients = this.ingredientNameCriteriaControl.valueChanges.pipe(
         startWith(null),
@@ -71,9 +77,7 @@ export class DrinkConfigDialogComponent implements OnInit {
   }
   
   remove(ingredientId: string): void {
-    this.ingredients.splice(this.ingredients.findIndex(ingredient => ingredient.id === ingredientId), 1);
     const index = this.ingredients.findIndex(ingredient => ingredient.id === ingredientId);
-
     if (index > -1) {
       this.ingredients.splice(index, 1);
     }
@@ -86,8 +90,8 @@ export class DrinkConfigDialogComponent implements OnInit {
     }
 
     this.ingredients.push(selectedIngredient);
-    this.ingredientsInput.nativeElement.value = '';
-    this.ingredientNameCriteriaControl.setValue(null);
+    this.ingredientsNameCriteriaInput.nativeElement.value = '';
+    this.ingredientNameCriteriaControl.setValue('');
   }
 
   private _filter(value: string | null): Ingredient[] {
