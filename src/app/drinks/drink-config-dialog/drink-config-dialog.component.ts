@@ -17,7 +17,6 @@ import { IngredientMeasurement } from 'src/models/ingredient-measurement';
   styleUrls: ['./drink-config-dialog.component.scss']
 })
 export class DrinkConfigDialogComponent implements OnInit {
-
   @ViewChild('ingredientsNameCriteriaInput')
   ingredientsNameCriteriaInput: ElementRef<HTMLInputElement>;
 
@@ -69,7 +68,7 @@ export class DrinkConfigDialogComponent implements OnInit {
       name: this.drinkForm.value.name,
       description: this.drinkForm.value.description,
       ingredientMeasurements: ingredientMeasurements,
-      defaultCupId: this.drink.defaultCupId,
+      defaultCupId: this.drinkForm.value.defaultCupId,
       starRating: this.drinkForm.value.starRating
     }
 

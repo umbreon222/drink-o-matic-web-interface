@@ -1,1 +1,12 @@
-<p>cup works!</p>
+<mat-card class="cup-container">
+    <button mat-mini-fab class="delete-button" (click)="deleteCupClicked()">
+        <mat-icon>delete</mat-icon>
+    </button>
+    <img class="cup-preview" alt="Cup preview image" [src]="cup.imageUrl"/>
+    <div class="cup-info-container">
+        <h2 class="cup-name">{{cup.name}}</h2>
+        <div class="buttons-container">
+            <button mat-raised-button color="primary" (click)="openCupConfig()">Configure</button>
+        </div>
+    </div>
+</mat-card>

@@ -1,1 +1,3 @@
-<p>cups works!</p>
+<div class="cups-container">
+    <app-cup *ngFor="let cup of cups" [cup]="cup" (onDeleteCup)="deleteCup($event)" (onUpdateCup)="updateCup($event)"></app-cup>
+</div>

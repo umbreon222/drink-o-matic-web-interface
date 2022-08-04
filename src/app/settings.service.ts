@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { first } from 'rxjs/operators';
+import { Cup } from 'src/models/cup';
 import { Drink } from 'src/models/drink';
 import { Ingredient } from 'src/models/ingredient';
 import { Pump } from 'src/models/pump';
@@ -27,6 +28,11 @@ export class SettingsService {
       this.settings = settings;
       this.settings$.next(this.settings);
     });
+  }
+
+  public storeCups(cups: Cup[]): Observable<any> {
+    this.settings.cups = cups;
+    return this.storeSettings();
   }
 
   public storeIngredients(ingredients: Ingredient[]): Observable<any> {

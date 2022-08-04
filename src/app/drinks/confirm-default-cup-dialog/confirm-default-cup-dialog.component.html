@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Confirm Default Cup Selection</h1>
+<mat-dialog-content>
+    <p>
+        Use default cup "{{defaultCup.name}}"?
+    </p>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>No</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="defaultCup">Yes</button>
+</mat-dialog-actions>

@@ -1,1 +1,20 @@
-<p>cup-config-dialog works!</p>
+<h1 mat-dialog-title>Cup Configuration</h1>
+<mat-dialog-content>
+  <form [formGroup]="cupForm" class="cup-config-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Image Url</mat-label>
+      <input matInput placeholder="Image Url" formControlName="imageUrl" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Cup Name</mat-label>
+      <input matInput placeholder="Cup Name" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Volume in ml</mat-label>
+      <input matInput type="number" placeholder="Volume in ml" formControlName="volumeMl" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="submit" mat-flat-button color="accent" (click)="onSubmit()">Save</button>
+</mat-dialog-actions>

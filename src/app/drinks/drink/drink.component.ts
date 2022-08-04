@@ -4,6 +4,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
 import { ApiService } from 'src/app/api.service';
+import { ConfirmDefaultCupDialogComponent } from '../confirm-default-cup-dialog/confirm-default-cup-dialog.component';
+import { CupPickerDialogComponent } from '../cup-picker-dialog/cup-picker-dialog.component';
+import { Cup } from 'src/models/cup';
 
 @Component({
   selector: 'app-drink',
@@ -40,10 +43,44 @@ export class DrinkComponent {
     this.onDeleteDrink.emit(this.drink);
   }
 
-  submitDrinkForProcessing() {
-    this.drink.ingredientMeasurements.forEach(ingredientMeasurement => {
-      
+  requestSubmitDrinkForProcessing() {
+    if (this.drink.defaultCupId) {
+      let dialogHandle = this.dialog.open(ConfirmDefaultCupDialogComponent, {
+        width: '500px',
+        data: this.drink.defaultCupId
+      });
+
+      dialogHandle.afterClosed().pipe(first()).subscribe((result: Cup) => {
+        if (result) {
+          this.submitDrinkForProcessing(result);
+          return;
+        }
+        
+        this.launchCupPickerDialog();
+      });
+
+      return;
+    }
+
+    this.launchCupPickerDialog();
+  }
+
+  launchCupPickerDialog() {
+    let dialogHandle = this.dialog.open(CupPickerDialogComponent, {
+      width: '500px'
     });
-    // this.apiService.postPump().subscribe(() => {});
+
+    dialogHandle.afterClosed().pipe(first()).subscribe((selectedCup: Cup) => {
+      if (selectedCup) {
+        this.submitDrinkForProcessing(selectedCup);
+      }
+    });
+  }
+
+  submitDrinkForProcessing(selectedCup: Cup): void {
+    console.log(`Submitting drink for processing: ${this.drink.name} using cup ${selectedCup.name}`);
+    this.drink.ingredientMeasurements.forEach(ingredientMeasurement => {
+      // this.apiService.postPump().subscribe(() => {});
+    });
   }
 }

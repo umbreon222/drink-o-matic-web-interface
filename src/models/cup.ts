@@ -1,5 +1,6 @@
 export interface Cup {
     id: string;
+    imageUrl: string;
     name: string;
-    volume: number;
+    volumeMl: number;
 }

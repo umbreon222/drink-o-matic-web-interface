@@ -29,6 +29,8 @@ import { ApiService } from './api.service';
 import { CupsComponent } from './cups/cups.component';
 import { CupComponent } from './cups/cup/cup.component';
 import { CupConfigDialogComponent } from './cups/cup-config-dialog/cup-config-dialog.component';
+import { ConfirmDefaultCupDialogComponent } from './drinks/confirm-default-cup-dialog/confirm-default-cup-dialog.component';
+import { CupPickerDialogComponent } from './drinks/cup-picker-dialog/cup-picker-dialog.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,9 @@ import { CupConfigDialogComponent } from './cups/cup-config-dialog/cup-config-di
     PumpComponent,
     CupsComponent,
     CupComponent,
-    CupConfigDialogComponent
+    CupConfigDialogComponent,
+    ConfirmDefaultCupDialogComponent,
+    CupPickerDialogComponent
   ],
   imports: [
     BrowserModule,

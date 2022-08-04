@@ -1,0 +1,10 @@
+:host(app-cups) {
+    width:100%
+}
+
+.cups-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 20px;
+}

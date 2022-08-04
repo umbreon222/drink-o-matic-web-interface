@@ -32,6 +32,7 @@ export class DrinksComponent implements OnInit, OnDestroy {
     if (!drinkToDelete) {
       return;
     }
+    
     let drinkIndex = this.drinks.findIndex(drink => drink.id === drinkToDelete.id);
     if (drinkIndex > -1) {
       this.drinks.splice(drinkIndex, 1);
@@ -43,6 +44,7 @@ export class DrinksComponent implements OnInit, OnDestroy {
     if (!drinkToUpdate) {
       return;
     }
+
     let drinkIndex = this.drinks.findIndex(drink => drink.id === drinkToUpdate.id);
     if (drinkIndex > -1) {
       this.drinks[drinkIndex] = drinkToUpdate;

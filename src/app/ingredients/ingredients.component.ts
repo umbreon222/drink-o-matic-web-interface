@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Ingredient } from 'src/models/ingredient';
 import { SettingsService } from '../settings.service';
 
@@ -7,7 +7,7 @@ import { SettingsService } from '../settings.service';
   templateUrl: './ingredients.component.html',
   styleUrls: ['./ingredients.component.scss']
 })
-export class IngredientsComponent {
+export class IngredientsComponent implements OnInit {
   public ingredients: Ingredient[] = [];
 
   constructor(private settingsService: SettingsService) { }
@@ -25,6 +25,7 @@ export class IngredientsComponent {
     if (!ingredientToDelete) {
       return;
     }
+    
     let ingredientIndex = this.ingredients.findIndex(ingredient => ingredient.id === ingredientToDelete.id);
     if (ingredientIndex > -1) {
       this.ingredients.splice(ingredientIndex, 1);

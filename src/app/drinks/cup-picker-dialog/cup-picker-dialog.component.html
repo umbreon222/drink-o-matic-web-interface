@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Cup Selection</h1>
+<mat-dialog-content>
+    <mat-select [(value)]="selectedCup">
+        <mat-option *ngFor="let cup of cups" [value]="cup">
+            {{cup.name}}
+        </mat-option>
+    </mat-select>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="selectedCup">Confirm</button>
+</mat-dialog-actions>
