@@ -1,15 +1,15 @@
-<form class="drink-config-form">
+<form [formGroup]="drinkForm" class="drink-config-form" (ngSubmit)="onSubmit()">
     <mat-form-field>
         <mat-label>Image Url</mat-label>
-        <input matInput placeholder="Image Url" [value]="drink.imageUrl">
+        <input matInput placeholder="Image Url" formControlName="imageUrl">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Drink Name</mat-label>
-        <input matInput placeholder="Drink Name" [value]="drink.name">
+        <input matInput placeholder="Drink Name" formControlName="name">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Description</mat-label>
-        <textarea matInput placeholder="Ex. What's the overall taste? How strong is it?..." [value]="drink.description"></textarea>
+        <textarea matInput placeholder="Ex. What's the overall taste? How strong is it?..." formControlName="description"></textarea>
     </mat-form-field>
     <mat-form-field class="example-chip-list" appearance="fill">
         <mat-label>Ingredients</mat-label>
@@ -26,7 +26,7 @@
             matInput
             placeholder="Search ingredient..."
             #ingredientsInput
-            [formControl]="ingredientsCtrl"
+            formControlName="ingredientNameCriteria"
             [matAutocomplete]="auto"
             [matChipInputFor]="chipList"
             [matChipInputSeparatorKeyCodes]="separatorKeysCodes">
@@ -39,7 +39,7 @@
       </mat-form-field>
     <mat-form-field>
         <mat-label>Star Rating</mat-label>
-        <input matInput type="number" placeholder="Star Rating" [value]="drink.starRating">
+        <input matInput type="number" placeholder="Star Rating" formControlName="starRating">
     </mat-form-field>
-    <button type="button" mat-flat-button color="accent" class="save-button" (click)="closeDialog()">Save</button>
+    <button type="submit" mat-flat-button color="accent" class="save-button">Save</button>
 </form>

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Ingredient } from 'src/models/ingredient';
-import { IngredientsService } from './ingredients.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-ingredients',
@@ -10,13 +10,17 @@ import { IngredientsService } from './ingredients.service';
 export class IngredientsComponent {
   public ingredients: Ingredient[] = [];
 
-  constructor(private ingredientsService: IngredientsService) { }
+  constructor(private settingsService: SettingsService) { }
 
   ngOnInit() {
-    this.ingredients = this.ingredientsService.getIngredients();
+    this.settingsService.settings$.subscribe(settings => {
+      this.ingredients = settings.ingredients;
+    });
   }
 
   deleteIngredient(eventInput: any) {
+    console.log('deleteIngredient(): Not implemented yet.');
+    return;
     let ingredientToDelete = eventInput as Ingredient;
     if (!ingredientToDelete) {
       return;

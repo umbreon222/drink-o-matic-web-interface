@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { first } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
+import { ApiService } from 'src/app/api.service';
 
 @Component({
   selector: 'app-drink',
@@ -13,9 +15,12 @@ export class DrinkComponent {
   public drink: Drink;
 
   @Output()
-  public onDeleteDrink: EventEmitter<Drink> = new EventEmitter<Drink>();
+  public onUpdateDrink = new EventEmitter<Drink>();
 
-  constructor(public dialog: MatDialog) { }
+  @Output()
+  public onDeleteDrink = new EventEmitter<Drink>();
+
+  constructor(private dialog: MatDialog, private apiService: ApiService) { }
 
   openDrinkConfig() {
     let dialogHandle = this.dialog.open(DrinkConfigDialogComponent, {
@@ -23,14 +28,22 @@ export class DrinkComponent {
       data: this.drink,
     });
 
-    dialogHandle.afterClosed().subscribe((result: Drink) => {
+    dialogHandle.afterClosed().pipe(first()).subscribe((result: Drink) => {
       if (result) {
         this.drink = result;
+        this.onUpdateDrink.emit(this.drink);
       }
     });
   }
 
   deleteDrinkClicked() {
     this.onDeleteDrink.emit(this.drink);
+  }
+
+  submitDrinkForProcessing() {
+    this.drink.ingredientMeasurements.forEach(ingredientMeasurement => {
+      
+    });
+    // this.apiService.postPump().subscribe(() => {});
   }
 }

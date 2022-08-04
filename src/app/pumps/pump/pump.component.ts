@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { first } from 'rxjs/operators';
+import { MatDialog } from '@angular/material/dialog';
+import { Pump } from 'src/models/pump';
+import { PumpConfigDialogComponent } from '../pump-config-dialog/pump-config-dialog.component';
 
 @Component({
   selector: 'app-pump',
@@ -6,10 +10,28 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pump.component.scss']
 })
 export class PumpComponent implements OnInit {
+  @Input()
+  public pump: Pump
 
-  constructor() { }
+  @Output()
+  public onUpdatePump = new EventEmitter<Pump>();
+
+  constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
   }
+  
+  openIngredientConfig() {
+    let dialogHandle = this.dialog.open(PumpConfigDialogComponent, {
+      width: '500px',
+      data: this.pump,
+    });
 
+    dialogHandle.afterClosed().pipe(first()).subscribe((result: Pump) => {
+      if (result) {
+        this.pump = result;
+        this.onUpdatePump.emit(this.pump);
+      }
+    });
+  }
 }

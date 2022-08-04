@@ -24,6 +24,10 @@ import { IngredientComponent } from './ingredients/ingredient/ingredient.compone
 import { IngredientConfigDialogComponent } from './ingredients/ingredient-config-dialog/ingredient-config-dialog.component';
 import { PumpConfigDialogComponent } from './pumps/pump-config-dialog/pump-config-dialog.component';
 import { PumpComponent } from './pumps/pump/pump.component';
+import { ApiService } from './api.service';
+import { CupsComponent } from './cups/cups.component';
+import { CupComponent } from './cups/cup/cup.component';
+import { CupConfigDialogComponent } from './cups/cup-config-dialog/cup-config-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,10 @@ import { PumpComponent } from './pumps/pump/pump.component';
     IngredientComponent,
     IngredientConfigDialogComponent,
     PumpConfigDialogComponent,
-    PumpComponent
+    PumpComponent,
+    CupsComponent,
+    CupComponent,
+    CupConfigDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +55,6 @@ import { PumpComponent } from './pumps/pump/pump.component';
     MatCardModule,
     MatDialogModule,
     MatInputModule,
-    FormsModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatAutocompleteModule,
@@ -56,7 +62,7 @@ import { PumpComponent } from './pumps/pump/pump.component';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

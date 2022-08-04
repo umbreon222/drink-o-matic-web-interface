@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { first } from 'rxjs';
 import { Ingredient } from 'src/models/ingredient';
 import { IngredientConfigDialogComponent } from '../ingredient-config-dialog/ingredient-config-dialog.component';
-import { IngredientsService } from '../ingredients.service';
 
 @Component({
   selector: 'app-ingredient',
@@ -14,9 +14,12 @@ export class IngredientComponent {
   public ingredient: Ingredient
 
   @Output()
-  public onDeleteIngredient: EventEmitter<Ingredient> = new EventEmitter<Ingredient>();
+  public onDeleteIngredient = new EventEmitter<Ingredient>();
 
-  constructor(public dialog: MatDialog, private ingredientsService: IngredientsService) { }
+  @Output()
+  public onUpdateIngredient = new EventEmitter<Ingredient>();
+
+  constructor(private dialog: MatDialog) { }
 
   openIngredientConfig() {
     let dialogHandle = this.dialog.open(IngredientConfigDialogComponent, {
@@ -24,9 +27,10 @@ export class IngredientComponent {
       data: this.ingredient,
     });
 
-    dialogHandle.afterClosed().subscribe((result: Ingredient) => {
+    dialogHandle.afterClosed().pipe(first()).subscribe((result: Ingredient) => {
       if (result) {
         this.ingredient = result;
+        this.onUpdateIngredient.emit(this.ingredient);
       }
     });
   }

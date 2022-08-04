@@ -6,13 +6,13 @@
     <div class="drink-info-container">
         <h2 class="drink-name">{{drink.name}}</h2>
         <div class="drink-footer-container">
-            <span>{{drink.ingredientIds.length}} ingredient{{drink.ingredientIds.length > 1 ? 's' : ''}}</span>
+            <span>{{drink.ingredientMeasurements.length}} ingredient{{drink.ingredientMeasurements.length > 1 ? 's' : ''}}</span>
             <span>{{drink.starRating}} star{{drink.starRating > 1 ? 's' : ''}}</span>
         </div>
         <p class="description">{{drink.description}}</p>
         <div class="buttons-container">
             <button mat-flat-button (click)="openDrinkConfig()">Configure</button>
-            <button mat-raised-button color="primary">Make It!</button>
+            <button mat-raised-button color="primary" (click)="submitDrinkForProcessing()">Make It!</button>
         </div>
     </div>
 </mat-card>
