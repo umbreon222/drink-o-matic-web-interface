@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
@@ -22,6 +23,7 @@ export class DrinksComponent implements OnInit, OnDestroy {
   private ingredients: Ingredient[];
   private pumps: Pump[];
   public drinks: Drink[] = [];
+  public filteredDrinks: Drink[] = [];
 
   constructor(
     private dialog: MatDialog,
@@ -35,6 +37,7 @@ export class DrinksComponent implements OnInit, OnDestroy {
       this.ingredients = settings.ingredients;
       this.pumps = settings.pumps;
       this.drinks = settings.drinks;
+      this.filterDrinks();
     });
   }
 
@@ -43,8 +46,6 @@ export class DrinksComponent implements OnInit, OnDestroy {
   }
 
   deleteDrink(eventInput: any) {
-    console.log('deleteDrink(): Not implemented yet.');
-    return;
     let drinkToDelete = eventInput as Drink;
     if (!drinkToDelete) {
       return;
@@ -54,6 +55,22 @@ export class DrinksComponent implements OnInit, OnDestroy {
     if (drinkIndex > -1) {
       this.drinks.splice(drinkIndex, 1);
     }
+    this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
+  }
+
+  addDrink() {
+    let newDrink: Drink = {
+      id: uuidv4(),
+      imageUrl: '/assets/images/drinks/default.jpg',
+      name: 'New Drink',
+      description: '',
+      ingredientMeasurements: [],
+      defaultCupId: null,
+      starRating: 0,
+
+    };
+    this.drinks.push(newDrink);
+    this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
   }
 
   updateDrink(eventInput: any) {
@@ -66,6 +83,12 @@ export class DrinksComponent implements OnInit, OnDestroy {
     if (drinkIndex > -1) {
       this.drinks[drinkIndex] = drinkToUpdate;
       this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
+    }
+  }
+
+  filterDrinks() {
+    if (this.drinks) {
+      this.filteredDrinks = [...this.drinks].sort((a, b) => a.name.localeCompare(b.name));
     }
   }
 

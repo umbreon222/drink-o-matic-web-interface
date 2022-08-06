@@ -2,14 +2,15 @@ import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Observable } from 'rxjs';
+import { map, startWith, first } from 'rxjs/operators';
 import { SettingsService } from 'src/app/settings.service';
 import { Cup } from 'src/models/cup';
 import { Drink } from 'src/models/drink';
 import { Ingredient } from 'src/models/ingredient';
 import { IngredientMeasurement } from 'src/models/ingredient-measurement';
+import { IngredientMeasurementDialogComponent } from '../ingredient-measurement-dialog/ingredient-measurement-dialog.component';
 
 @Component({
   selector: 'app-drink-config-dialog',
@@ -24,21 +25,25 @@ export class DrinkConfigDialogComponent implements OnInit {
   separatorKeysCodes: number[] = [ ENTER, COMMA ];
   allIngredients: Ingredient[];
   ingredientNameCriteriaControl = new FormControl('');
-  filteredIngredients: Observable<Ingredient[]>;
+  ingredientMeasurements: IngredientMeasurement[];
   ingredients: Ingredient[];
+  filteredIngredients: Observable<Ingredient[]>;
   allCups: Cup[];
 
   constructor(
+    private dialog: MatDialog,
     private dialogRef: MatDialogRef<DrinkConfigDialogComponent>,
     @Inject(MAT_DIALOG_DATA) private drink: Drink,
     private formBuilder: FormBuilder,
     private settingsService: SettingsService
-  ) { }
+  ) {
+    this.ingredientMeasurements = drink.ingredientMeasurements;
+  }
   
   ngOnInit(): void {
     this.settingsService.settings$.subscribe(settings => {
       this.allIngredients = settings.ingredients;
-      this.ingredients = this.allIngredients.filter(ingredient => this.drink.ingredientMeasurements.some(ingredientMeasurement => ingredientMeasurement.ingredientId === ingredient.id));
+      this.ingredients = this.allIngredients.filter(ingredient => this.ingredientMeasurements.some(ingredientMeasurement => ingredientMeasurement.ingredientId === ingredient.id));
       this.allCups = settings.cups;
       this.drinkForm = this.formBuilder.group({
         imageUrl: this.drink.imageUrl,
@@ -56,18 +61,49 @@ export class DrinkConfigDialogComponent implements OnInit {
     });
   }
 
-  onSubmit() {
-    let ingredientMeasurements = new Array<IngredientMeasurement>();
-    this.ingredients.forEach(ingredient => {
-      ingredientMeasurements.push({ ingredientId: ingredient.id, parts: 1 });
+  launchAddIngredientMeasurementDialog(ingredient: Ingredient): void {
+    if (!ingredient) {
+      return;
+    }
+
+    let dialogHandle = this.dialog.open(IngredientMeasurementDialogComponent, {
+      width: '250px',
+      data: { name: ingredient.name, parts: 1 }
     });
 
+    dialogHandle.afterClosed().pipe(first()).subscribe((result: number) => {
+      if (result) {
+        this.ingredients.push(ingredient);
+        this.ingredientMeasurements.push({ ingredientId: ingredient.id, parts: result });
+      }
+    });
+  }
+
+  launchEditIngredientMeasurement(ingredient: Ingredient): void {
+    const ingredientMeasurement = this.ingredientMeasurements.find(ingredientMeasurement => ingredientMeasurement.ingredientId === ingredient.id);
+    if (!ingredientMeasurement) {
+      return;
+    }
+
+    let dialogHandle = this.dialog.open(IngredientMeasurementDialogComponent, {
+      width: '250px',
+      data: { name: ingredient.name, parts: ingredientMeasurement.parts }
+    });
+
+    dialogHandle.afterClosed().pipe(first()).subscribe((result: number) => {
+      if (result) {
+        ingredientMeasurement.parts = result;
+      }
+    });
+  }
+
+  onSubmit() {
     const updatedDrink: Drink = {
       id: this.drink.id,
       imageUrl: this.drinkForm.value.imageUrl,
       name: this.drinkForm.value.name,
       description: this.drinkForm.value.description,
-      ingredientMeasurements: ingredientMeasurements,
+      ingredientMeasurements: this.ingredientMeasurements,
       defaultCupId: this.drinkForm.value.defaultCupId,
       starRating: this.drinkForm.value.starRating
     }
@@ -76,9 +112,14 @@ export class DrinkConfigDialogComponent implements OnInit {
   }
   
   remove(ingredientId: string): void {
-    const index = this.ingredients.findIndex(ingredient => ingredient.id === ingredientId);
-    if (index > -1) {
-      this.ingredients.splice(index, 1);
+    const ingredientToRemoveIndex = this.ingredients.findIndex(ingredient => ingredient.id === ingredientId);
+    if (ingredientToRemoveIndex > -1) {
+      this.ingredients.splice(ingredientToRemoveIndex, 1);
+    }
+
+    const ingredientMeasurementToRemoveIndex = this.ingredientMeasurements.findIndex(ingredientMeasurement => ingredientMeasurement.ingredientId === ingredientId);
+    if (ingredientMeasurementToRemoveIndex > -1) {
+      this.ingredientMeasurements.splice(ingredientMeasurementToRemoveIndex, 1);
     }
   }
 
@@ -88,9 +129,9 @@ export class DrinkConfigDialogComponent implements OnInit {
       return;
     }
 
-    this.ingredients.push(selectedIngredient);
     this.ingredientsNameCriteriaInput.nativeElement.value = '';
     this.ingredientNameCriteriaControl.setValue('');
+    this.launchAddIngredientMeasurementDialog(selectedIngredient);
   }
 
   private _filter(value: string | null): Ingredient[] {

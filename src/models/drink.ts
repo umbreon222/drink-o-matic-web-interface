@@ -6,6 +6,6 @@ export interface Drink {
     name: string;
     description: string;
     ingredientMeasurements: IngredientMeasurement[];
-    defaultCupId: string;
+    defaultCupId: string | null;
     starRating: number;
 }

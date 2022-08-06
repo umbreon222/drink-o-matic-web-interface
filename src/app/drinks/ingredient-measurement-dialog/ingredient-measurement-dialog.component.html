@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>How Much {{name}}?</h1>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>How many parts?</mat-label>
+        <input matInput type="number" min="1" placeholder="How many parts?" [(ngModel)]="parts"/>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-flat-button mat-dialog-close>Cancel</button>
+    <button mat-raised-button color="primary" [mat-dialog-close]="parts">Confirm</button>
+</mat-dialog-actions>

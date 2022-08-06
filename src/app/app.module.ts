@@ -31,6 +31,7 @@ import { CupComponent } from './cups/cup/cup.component';
 import { CupConfigDialogComponent } from './cups/cup-config-dialog/cup-config-dialog.component';
 import { ConfirmDefaultCupDialogComponent } from './drinks/confirm-default-cup-dialog/confirm-default-cup-dialog.component';
 import { CupPickerDialogComponent } from './drinks/cup-picker-dialog/cup-picker-dialog.component';
+import { IngredientMeasurementDialogComponent } from './drinks/ingredient-measurement-dialog/ingredient-measurement-dialog.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { CupPickerDialogComponent } from './drinks/cup-picker-dialog/cup-picker-
     CupComponent,
     CupConfigDialogComponent,
     ConfirmDefaultCupDialogComponent,
-    CupPickerDialogComponent
+    CupPickerDialogComponent,
+    IngredientMeasurementDialogComponent
   ],
   imports: [
     BrowserModule,

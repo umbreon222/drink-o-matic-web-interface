@@ -1,3 +1,6 @@
 <div class="drinks-container">
-    <app-drink *ngFor="let drink of drinks" [drink]="drink" (onDeleteDrink)="deleteDrink($event)" (onUpdateDrink)="updateDrink($event)" (onSubmitDrinkForProcessing)="requestForProcessing($event)"></app-drink>
+    <app-drink *ngFor="let drink of filteredDrinks" [drink]="drink" (onDeleteDrink)="deleteDrink($event)" (onUpdateDrink)="updateDrink($event)" (onSubmitDrinkForProcessing)="requestForProcessing($event)"></app-drink>
 </div>
+<button class="add-drink-fab" mat-fab color="primary" aria-label="Add drink button" (click)="addDrink()">
+    <mat-icon>add</mat-icon>
+</button>

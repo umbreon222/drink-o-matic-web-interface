@@ -16,7 +16,7 @@
     <mat-form-field appearance="fill">
       <mat-label>Ingredients</mat-label>
       <mat-chip-list #chipList aria-label="Ingredient selection">
-        <mat-chip *ngFor="let ingredient of ingredients" (removed)="remove(ingredient.id)">
+        <mat-chip *ngFor="let ingredient of ingredients" (removed)="remove(ingredient.id)" (click)="launchEditIngredientMeasurement(ingredient)">
           {{ingredient.name}}
           <button matChipRemove>
             <mat-icon>cancel</mat-icon>
@@ -41,7 +41,7 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
       <mat-label>Star Rating</mat-label>
-      <input matInput type="number" placeholder="Star Rating" formControlName="starRating" />
+      <input matInput type="number" min="0" max="5" placeholder="Star Rating" formControlName="starRating" />
     </mat-form-field>
   </form>
 </mat-dialog-content>
