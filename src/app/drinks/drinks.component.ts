@@ -54,8 +54,8 @@ export class DrinksComponent implements OnInit, OnDestroy {
     let drinkIndex = this.drinks.findIndex(drink => drink.id === drinkToDelete.id);
     if (drinkIndex > -1) {
       this.drinks.splice(drinkIndex, 1);
+      this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
     }
-    this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
   }
 
   addDrink() {
@@ -67,8 +67,8 @@ export class DrinksComponent implements OnInit, OnDestroy {
       ingredientMeasurements: [],
       defaultCupId: null,
       starRating: 0,
-
     };
+    
     this.drinks.push(newDrink);
     this.settingsService.storeDrinks(this.drinks).pipe(first()).subscribe();
   }

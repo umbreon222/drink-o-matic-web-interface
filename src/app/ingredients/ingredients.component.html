@@ -1,3 +1,6 @@
 <div class="ingredients-container">
-    <app-ingredient *ngFor="let ingredient of ingredients" [ingredient]="ingredient" (onDeleteIngredient)="deleteIngredient($event)"></app-ingredient>
+    <app-ingredient *ngFor="let ingredient of ingredients" [ingredient]="ingredient" (onDeleteIngredient)="deleteIngredient($event)" (onUpdateIngredient)="updateIngredient($event)"></app-ingredient>
 </div>
+<button class="add-ingredient-fab" mat-fab color="accent" aria-label="Add ingredient button" (click)="addIngredient()">
+    <mat-icon>add</mat-icon>
+</button>

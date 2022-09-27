@@ -1,1 +1,16 @@
-<p>ingredient-config-dialog works!</p>
+<h1 mat-dialog-title>Ingredient Configuration</h1>
+<mat-dialog-content>
+  <form [formGroup]="ingredientForm" class="ingredient-config-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Ingredient Name</mat-label>
+      <input matInput placeholder="Ingredient Name" formControlName="name" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Volume Modifier (volume *= modifier/100)</mat-label>
+      <input matInput type="number" min="1" max="65535" placeholder="Modifier" formControlName="modifier" />
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="submit" mat-flat-button color="accent" (click)="onSubmit()">Save</button>
+</mat-dialog-actions>

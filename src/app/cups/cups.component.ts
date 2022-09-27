@@ -30,6 +30,7 @@ export class CupsComponent implements OnInit {
     let cupIndex = this.cups.findIndex(ingredient => ingredient.id === cupToDelete.id);
     if (cupIndex > -1) {
       this.cups.splice(cupIndex, 1);
+      this.settingsService.storeCups(this.cups).pipe(first()).subscribe();
     }
   }
 
