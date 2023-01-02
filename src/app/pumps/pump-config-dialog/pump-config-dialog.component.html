@@ -1,1 +1,25 @@
-<p>pump-config-dialog works!</p>
+<h1 mat-dialog-title>Pump Configuration</h1>
+<mat-dialog-content>
+  <form [formGroup]="pumpForm" class="pump-config-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Ingredient</mat-label>
+      <mat-chip-list #chipList aria-label="Ingredient selection">
+        <mat-chip *ngFor="let ingredient of ingredients" (removed)="remove(ingredient.id)">
+            {{ ingredient.name }}
+            <button matChipRemove>
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </mat-chip>
+        <input matInput #ingredientsNameCriteriaInput type="text" placeholder="Search ingredient..." formControlName="ingredientNameCriteria" [matAutocomplete]="auto" [matChipInputFor]="chipList" [matChipInputSeparatorKeyCodes]="separatorKeysCodes"/>
+      </mat-chip-list>
+      <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+        <mat-option *ngFor="let ingredient of filteredIngredients | async" [value]="ingredient.id">
+          {{ ingredient.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button type="submit" mat-flat-button color="accent" (click)="onSubmit()">Save</button>
+</mat-dialog-actions>

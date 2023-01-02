@@ -1,0 +1,21 @@
+.pump-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.pump-container {
+    min-width: 200px;
+}
+
+.description {
+    font-weight: lighter;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    width: 100%;
+}
