@@ -3,7 +3,6 @@ import { first } from 'rxjs/operators';
 import { MatDialog } from '@angular/material/dialog';
 import { DrinkConfigDialogComponent } from '../drink-config-dialog/drink-config-dialog.component';
 import { Drink } from 'src/models/drink';
-import { ApiService } from 'src/app/api.service';
 
 @Component({
   selector: 'app-drink',
@@ -23,7 +22,7 @@ export class DrinkComponent {
   @Output()
   public onDeleteDrink = new EventEmitter<Drink>();
 
-  constructor(private dialog: MatDialog, private apiService: ApiService) { }
+  constructor(private dialog: MatDialog) { }
 
   openDrinkConfig() {
     let dialogHandle = this.dialog.open(DrinkConfigDialogComponent, {

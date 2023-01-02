@@ -1,1 +1,9 @@
-<p>pump works!</p>
+<mat-card class="pump-container">
+    <div class="pump-info-container">
+        <h2 class="pump-name">Pump #{{pump.pumpNumber}}</h2>
+        <p class="description">Ingredient: {{ingredient?.name ?? "None"}}</p>
+        <div class="buttons-container">
+            <button mat-flat-button color="primary" (click)="openPumpConfig()">Configure</button>
+        </div>
+    </div>
+</mat-card>

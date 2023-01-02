@@ -1,1 +1,3 @@
-<p>pumps works!</p>
+<div class="pumps-container">
+    <app-pump *ngFor="let pump of pumps" [pump]="pump" (onUpdatePump)="updatePump($event)"></app-pump>
+</div>

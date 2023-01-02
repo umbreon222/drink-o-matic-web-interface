@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { PumpState } from 'src/models/pump-state';
 import { Settings } from 'src/models/settings';
 
 const BASE_URL = 'http://127.0.0.1:7362/';
@@ -21,6 +22,11 @@ export class ApiService {
   public putSettings(settings: Settings): Observable<any> {
     const url = BASE_URL + SETTINGS_ENDPOINT;
     return this.putJson(url, JSON.stringify(settings));
+  }
+
+  public getPumpStates(): Observable<PumpState[]> {
+    const url = BASE_URL + PUMPS_ENDPOINT;
+    return this.getJson<PumpState[]>(url);
   }
 
   public postPump(pumpNumber: number, duration: number): Observable<any> {
