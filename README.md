@@ -1,27 +1,42 @@
-# DrinkOMaticWebInterface
+# Drink-O-Matic Web Interface
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.6.
+A crude web interface for my Drink-O-Matic API ([umbreon222/drink-o-matic](https://github.com/umbreon222/drink-o-matic)) built with Angular.
 
-## Development server
+## About The Project
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+<div>
+  <img src="preview-images/drinks.png?raw=true" width="500" height="500">
+  <img src="preview-images/pumps.png?raw=true" width="500" height="500">
+</div>
 
-## Code scaffolding
+I was watching some YouTube videos about cool things to do with embedded systems when I came across something called a "barbot". It was an arduino powered cocktail bar which inspired me to try and make something similiar at a cost that wouldn't break the bank. Thus the "Drink-O-Matic" was born. This project is a bare minimum UI which wraps the API I came up with. If you're interested, you can read more over on [my APIs README](https://github.com/umbreon222/drink-o-matic/#readme)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Getting Started
 
-## Build
+### Usage
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. Update the environment files in _src\environments_ to point to your instance of the Drink-O-Matic API.
+2. Start your [Drink-O-Matic API](https://github.com/umbreon222/drink-o-matic/#usage) with the "bff" (back-end for front-end) feature enabled
 
-## Running unit tests
+`cargo run -r --features bff`
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+3. Start a dev server
 
-## Running end-to-end tests
+`ng serve`
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+4. Navigate to `http://localhost:4200/`
+5. Add & configure your ingredients
+<img src="preview-images/ingredients-step.png?raw=true">
+6. Assign your ingredients to the appropriate pumps
+<img src="preview-images/pumps-step.png?raw=true">
+7. Create a cup (this helps with calculating how much of each ingredient to pump)
+<img src="preview-images/cups-step.png?raw=true">
+8. Create your drink
+<img src="preview-images/drinks-step.png?raw=true">
+9. Make it!<img src="preview-images/make-it-step.png?raw=true">
 
-## Further help
+Note: If you want this to be accessible to all devices on the network you can set the start command in _package.json_ to `ng serve --host=0.0.0.0`
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## License
+
+Distributed under the MIT License. See [LICENSE.txt](/LICENSE.txt) for more information. ([back to top](/#drink-o-matic-web-interface))
