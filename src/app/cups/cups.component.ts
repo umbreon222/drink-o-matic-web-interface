@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { Cup } from 'src/models/cup';
@@ -17,6 +18,18 @@ export class CupsComponent implements OnInit {
     this.settingsService.settings$.subscribe(settings => {
       this.cups = settings.cups;
     });
+  }
+
+  addCup() {
+    let newCup: Cup = {
+      id: uuidv4(),
+      imageUrl: '/assets/images/cups/default.jpg',
+      name: 'New Cup',
+      volumeMl: 266
+    };
+    
+    this.cups.push(newCup);
+    this.settingsService.storeCups(this.cups).pipe(first()).subscribe();
   }
 
   deleteCup(eventInput: any) {
@@ -47,3 +60,4 @@ export class CupsComponent implements OnInit {
     }
   }
 }
+
