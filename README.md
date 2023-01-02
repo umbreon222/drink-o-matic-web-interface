@@ -5,8 +5,8 @@ A crude web interface for my Drink-O-Matic API ([umbreon222/drink-o-matic](https
 ## About The Project
 
 <div>
-  <img src="preview-images/drinks.png?raw=true" width="500" height="500">
-  <img src="preview-images/pumps.png?raw=true" width="500" height="500">
+  <img src="preview-images/drinks.png?raw=true" width="49%">
+  <img src="preview-images/pumps.png?raw=true" width="49%">
 </div>
 
 I was watching some YouTube videos about cool things to do with embedded systems when I came across something called a "barbot". It was an arduino powered cocktail bar which inspired me to try and make something similiar at a cost that wouldn't break the bank. Thus the "Drink-O-Matic" was born. This project is a bare minimum UI which wraps the API I came up with. If you're interested, you can read more over on [my APIs README](https://github.com/umbreon222/drink-o-matic/README.md)
@@ -26,13 +26,13 @@ I was watching some YouTube videos about cool things to do with embedded systems
 
 4. Navigate to `http://localhost:4200/`
 5. Add & configure your ingredients
-<img src="preview-images/ingredients-step.png?raw=true">
+<img src="preview-images/ingredients-step.png?raw=true" width=100%>
 6. Assign your ingredients to the appropriate pumps
-<img src="preview-images/pumps-step.png?raw=true">
+<img src="preview-images/pumps-step.png?raw=true" width=100%>
 7. Create a cup (this helps with calculating how much of each ingredient to pump)
-<img src="preview-images/cups-step.png?raw=true">
+<img src="preview-images/cups-step.png?raw=true" width=100%>
 8. Create your drink
-<img src="preview-images/drinks-step.png?raw=true">
+<img src="preview-images/drinks-step.png?raw=true" width=100%>
 9. Make it!<img src="preview-images/make-it-step.png?raw=true">
 
 Note: If you want this to be accessible to all devices on the network you can set the start command in _package.json_ to `ng serve --host=0.0.0.0`
