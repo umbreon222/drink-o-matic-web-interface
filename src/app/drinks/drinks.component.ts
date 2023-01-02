@@ -124,9 +124,8 @@ export class DrinksComponent implements OnInit, OnDestroy {
     });
   }
 
-  // Remove console.log()'s after this has been tested more thoroughly.
+  // Replace `console.log()`s with error dialog.
   submitDrinkForProcessing(drink: Drink, selectedCup: Cup): void {
-    console.log(`Scheduling drink "${drink.name}" using cup "${selectedCup.name}"`);
     const totalParts = drink.ingredientMeasurements.reduce((acc, curr) => { acc += curr.parts; return acc; }, 0);
     drink.ingredientMeasurements.forEach(ingredientMeasurement => {
       let pump = this.pumps.find(pump => pump.ingredientId === ingredientMeasurement.ingredientId);
@@ -142,7 +141,6 @@ export class DrinksComponent implements OnInit, OnDestroy {
       }
 
       const mlToPump = Math.round(selectedCup.volumeMl * (ingredientMeasurement.parts / totalParts) * (ingredient.modifier / 100));
-      console.log(`Scheduling pump ${pump.pumpNumber} to pump ${mlToPump}ml of ${ingredient.name}`);
       this.apiService.postPump(pump.pumpNumber, mlToPump).pipe(first()).subscribe();
     });
   }
