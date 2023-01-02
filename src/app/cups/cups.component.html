@@ -1,3 +1,6 @@
 <div class="cups-container">
     <app-cup *ngFor="let cup of cups" [cup]="cup" (onDeleteCup)="deleteCup($event)" (onUpdateCup)="updateCup($event)"></app-cup>
 </div>
+<button class="add-cup-fab" mat-fab color="accent" aria-label="Add cup button" (click)="addCup()">
+    <mat-icon>add</mat-icon>
+</button>

@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { Cup } from 'src/models/cup';
 import { Drink } from 'src/models/drink';
 import { Ingredient } from 'src/models/ingredient';
 import { Pump } from 'src/models/pump';
@@ -11,6 +10,7 @@ import { ApiService } from '../api.service';
 import { SettingsService } from '../settings.service';
 import { ConfirmDefaultCupDialogComponent } from './confirm-default-cup-dialog/confirm-default-cup-dialog.component';
 import { CupPickerDialogComponent } from './cup-picker-dialog/cup-picker-dialog.component';
+import { Cup } from 'src/models/cup';
 
 @Component({
   selector: 'app-drinks',
@@ -19,7 +19,6 @@ import { CupPickerDialogComponent } from './cup-picker-dialog/cup-picker-dialog.
 })
 export class DrinksComponent implements OnInit, OnDestroy {
   private settingsSubscription: Subscription;
-  private cups: Cup[];
   private ingredients: Ingredient[];
   private pumps: Pump[];
   public drinks: Drink[] = [];
@@ -33,7 +32,6 @@ export class DrinksComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.settingsSubscription = this.settingsService.settings$.subscribe(settings => {
-      this.cups = settings.cups;
       this.ingredients = settings.ingredients;
       this.pumps = settings.pumps;
       this.drinks = settings.drinks;
